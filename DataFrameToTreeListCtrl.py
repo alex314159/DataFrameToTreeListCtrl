@@ -4,21 +4,7 @@ from wx.lib.pubsub import pub
 import pandas
 
 class DataFrameToTreeListCtrl(wx.Panel):
-    """Class to define the Risk Tree Panel 
-
-    Attributes:
-
-    Methods:
-    __init__()
-    OnActivate()
-    onCollapseAll()
-    onRiskTreeQuery()
-    OnRightUp()
-    OnSize()
-    onFillEODPrices()
-    onUpdateTree()
-    takeScreenshot()
-
+    """
     """
     def __init__(self, parent, df, groupList, treeHeader, treeHeaderWidth, columnHeaders, columnList, columnWidths, columnAlignment, columnFormats, strTreeID):
         """Keyword arguments:
