@@ -3,6 +3,12 @@ import  wx.gizmos as gizmos
 from wx.lib.pubsub import pub
 import pandas
 
+
+class MessageContainer():
+    def __init__(self,data):
+        self.data=data
+
+        
 class DataFrameToTreeListCtrl(wx.Panel):
     """
     """
