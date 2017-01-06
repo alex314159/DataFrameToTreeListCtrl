@@ -165,7 +165,7 @@ class TreeTest(wx.Frame):
                               6: 'John', 7: 'Mary', 8: 'John', 9: 'Mary', 10: 'John', 11: 'Mary', \
                               12: 'John', 13: 'Mary', 14: 'John', 15: 'Mary'}}
         df = pandas.DataFrame(dc)
-        groupedData = df.groupby(['Salesperson','Region'])
+        groupList = ['Salesperson','Region']
         treeHeader = 'Key'
         treeHeaderWidth = 200
         columnHeaders = ['Jan','Feb']
@@ -173,7 +173,7 @@ class TreeTest(wx.Frame):
         columnWidths = [100,200]
         columnAlignment = [wx.ALIGN_RIGHT,wx.ALIGN_RIGHT]
         columnFormats = ['{:,.0f}','{:,.0f}']
-        tree = DataFrameToTreeListCtrl(self, groupedData, treeHeader, treeHeaderWidth, columnHeaders, columnList, columnWidths, columnAlignment, columnFormats, 'TEST_TREE')
+        tree = DataFrameToTreeListCtrl(self, df, groupList, treeHeader, treeHeaderWidth, columnHeaders, columnList, columnWidths, columnAlignment, columnFormats, 'TEST_TREE')
         box = wx.BoxSizer(wx.VERTICAL)
         box.Add(tree, 1, wx.EXPAND)
         self.SetAutoLayout(True)
