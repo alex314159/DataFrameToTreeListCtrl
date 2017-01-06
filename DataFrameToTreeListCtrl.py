@@ -24,8 +24,6 @@ class DataFrameToTreeListCtrl(wx.Panel):
         self.columnAlignment = columnAlignment
         self.columnFormats = columnFormats
         self.strTreeID = strTreeID
-        self.groupedData = df.groupby(self.groupList)
-        self.groupedDataSum = self.groupedData[columnList].sum()
         self.tree = gizmos.TreeListCtrl(self, wx.ID_ANY)
         isz = (16,16)
         il = wx.ImageList(isz[0], isz[1])
@@ -151,18 +149,40 @@ class DataFrameToTreeListCtrl(wx.Panel):
         pub.sendMessage('TREE_REDRAWN', message=MessageContainer(self.strTreeID))
         #self.onCollapseAll()
         
-def main():
-    dc = {'Customer': {0: 'a', 1: 'b', 2: 'c', 3: 'd', 4: 'e', 5: 'f', 6: 'g', 7: 'h', 8: 'i', \
-                       9: 'j', 10: 'k', 11: 'l', 12: 'm', 13: 'n', 14: 'o', 15: 'p'}, \
-          'February': {0: 50, 1: 48, 2: 46, 3: 44, 4: 42, 5: 40, 6: 38, 7: 36, 8: 34, 9: 32, \
-                       10: 30, 11: 28, 12: 26, 13: 24, 14: 22, 15: 20}, \
-          'January': {0: 1, 1: 3, 2: 5, 3: 7, 4: 9, 5: 11, 6: 13, 7: 15, 8: 17, 9: 19, 10: 21, \
-                      11: 23, 12: 25, 13: 27, 14: 29, 15: 31}, \
-          'Region': {0: 'America', 1: 'Asia', 2: 'Europe', 3: 'Africa', 4: 'America', 5: 'Asia', \
-                     6: 'Europe', 7: 'Africa', 8: 'America', 9: 'Asia', 10: 'Europe', 11: 'Africa', \
-                     12: 'America', 13: 'Asia', 14: 'Europe', 15: 'Africa'}, \
-          'Salesperson': {0: 'John', 1: 'Mary', 2: 'John', 3: 'Mary', 4: 'John', 5: 'Mary', \
-                          6: 'John', 7: 'Mary', 8: 'John', 9: 'Mary', 10: 'John', 11: 'Mary', \
-                          12: 'John', 13: 'Mary', 14: 'John', 15: 'Mary'}}
-    df = pandas.DataFrame(dc)
+class TreeTest(wx.Frame):
+    def __init__(self):
+        wx.Frame.__init__(self,None, wx.ID_ANY, "Tree test",size=(925,850))
+        dc = {'Customer': {0: 'a', 1: 'b', 2: 'c', 3: 'd', 4: 'e', 5: 'f', 6: 'g', 7: 'h', 8: 'i', \
+                           9: 'j', 10: 'k', 11: 'l', 12: 'm', 13: 'n', 14: 'o', 15: 'p'}, \
+              'February': {0: 50, 1: 48, 2: 46, 3: 44, 4: 42, 5: 40, 6: 38, 7: 36, 8: 34, 9: 32, \
+                           10: 30, 11: 28, 12: 26, 13: 24, 14: 22, 15: 20}, \
+              'January': {0: 1, 1: 3, 2: 5, 3: 7, 4: 9, 5: 11, 6: 13, 7: 15, 8: 17, 9: 19, 10: 21, \
+                          11: 23, 12: 25, 13: 27, 14: 29, 15: 31}, \
+              'Region': {0: 'America', 1: 'Asia', 2: 'Europe', 3: 'Africa', 4: 'America', 5: 'Asia', \
+                         6: 'Europe', 7: 'Africa', 8: 'America', 9: 'Asia', 10: 'Europe', 11: 'Africa', \
+                         12: 'America', 13: 'Asia', 14: 'Europe', 15: 'Africa'}, \
+              'Salesperson': {0: 'John', 1: 'Mary', 2: 'John', 3: 'Mary', 4: 'John', 5: 'Mary', \
+                              6: 'John', 7: 'Mary', 8: 'John', 9: 'Mary', 10: 'John', 11: 'Mary', \
+                              12: 'John', 13: 'Mary', 14: 'John', 15: 'Mary'}}
+        df = pandas.DataFrame(dc)
+        groupedData = df.groupby(['Salesperson','Region'])
+        treeHeader = 'Key'
+        treeHeaderWidth = 200
+        columnHeaders = ['Jan','Feb']
+        columnList = ['January','February']
+        columnWidths = [100,200]
+        columnAlignment = [wx.ALIGN_RIGHT,wx.ALIGN_RIGHT]
+        columnFormats = ['{:,.0f}','{:,.0f}']
+        tree = DataFrameToTreeListCtrl(self, groupedData, treeHeader, treeHeaderWidth, columnHeaders, columnList, columnWidths, columnAlignment, columnFormats, 'TEST_TREE')
+        box = wx.BoxSizer(wx.VERTICAL)
+        box.Add(tree, 1, wx.EXPAND)
+        self.SetAutoLayout(True)
+        self.SetSizer(box)
+        self.Layout()
+
+
+if __name__ == "__main__":
+    app = wx.App()
+    frame = TreeTest().Show()
+    app.MainLoop()
 
