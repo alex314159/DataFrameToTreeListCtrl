@@ -13,11 +13,6 @@ class DataFrameToTreeListCtrl(wx.Panel):
     """
     """
     def __init__(self, parent, df, groupList, treeHeader, treeHeaderWidth, columnHeaders, columnList, columnWidths, columnAlignment, columnFormats, strTreeID):
-        """Keyword arguments:
-        parent : parent 
-        th = trade history (defaults to empty array if not specified)
-        #groupedData in a multiindex Dataframe, typically the result of a df.groupby[columnList].sum()
-        """
         wx.Panel.__init__(self, parent, wx.ID_ANY)#-1
         self.parent=parent
         self.df = df
